@@ -1,0 +1,247 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>pixel counter</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <div class="container" style="background:#CCC">
+      <h1>origin</h1>
+      <!-- <img id="scream" src="jobs.png"/> -->
+      <img id="scream" src="cube.png"/>
+      <h1>canvas</h1>
+      <!-- <canvas id="myCanvas" style="width:310px"></canvas> -->
+      <canvas id="myCanvas" width="310" height="70"></canvas>
+
+      <h1>canvas2</h1>
+      <canvas id="myCanvas2" width="310" height="70"></canvas>
+      <script type="text/javascript">
+      window.onload = function() {
+          var c = document.getElementById("myCanvas");
+          var ctx = c.getContext("2d");
+          // debugger;
+          var img = document.getElementById("scream");
+
+          
+
+
+          var w      = img.naturalWidth;
+          var h      = img.naturalHeight;
+          // debugger;
+
+          // c.style.width  = w + 'px';
+          // c.style.height = h + 'px';
+
+          ctx.drawImage(img,0,0);
+
+          var imgdt  = ctx.getImageData(0, 0, w, h);
+
+          var a = imgdt.data;
+
+          // debugger;
+
+          var greens = [];
+
+          var transparents = [];
+          var axis = [];
+          var axis2 = [];
+          for (var k=0; k<a.length; k+=4 )
+          {
+
+              // a[k  ] = 255 - a[k  ];  // R
+              // a[k+1] = 255 - a[k+1];  // G
+              // a[k+2] = 255 - a[k+2];  // B
+              // a[k+3] = 255;           // A
+              var red   = a[k  ];
+              var green = a[k+1];
+              var blue  = a[k+2];
+              var alpha = a[k+3];
+
+
+              // if ( red == 0){
+              // // if ( red == 0){
+              //   // console.log('red   : ' + red);
+              //   // greens.push(1);
+              // }
+              if(alpha == 0 ){
+                // console.log(alpha);
+                transparents.push(1);
+              }else{
+                axis.push(k/ 4);
+
+                var x = (k / 4) % w;
+                var y = Math.floor((k / 4) / h);
+
+                // console.log('axis   : ' + x + ',' + y);
+                // console.log('red    : ' + red);
+                // console.log('green  : ' + green);
+                // console.log('blue   : ' + blue);
+                // console.log('alpha  : ' + alpha);
+                // console.log('--------------');
+
+
+
+                axis2.push([x,y]);
+              }
+
+
+          }
+          console.log( JSON.stringify(axis2.sort()) );
+          // console.log(a.length);
+          // console.log(transparents.length);
+           
+          // c.width = w;
+          // c.height = h;
+          // ctx.putImageData(imgdt, 0, 0);
+
+          window.axis = axis;
+          window.axis2 = axis2;
+
+
+          // var myCanvas2 = 
+          var c = document.getElementById("myCanvas2");
+          var ctx = c.getContext("2d");
+
+          var x = 0;
+          var y = 0;
+          // for (var i = 0; i < axis.length; i++) {            
+          //   console.log( axis[i] );
+          //   // var y = axis[i] % 70;
+          //   // // // var y = axis[i] / 70 ;
+
+          //   // var x = Math.ceil( axis[i] / 70 );
+
+
+          //   // console.log('x : ' + x);
+          //   // console.log('y : ' + y);
+          //   // x += 70;
+          //   // y += 10;
+
+          //   ctx.fillRect(x,y,1,1);
+          // };
+
+          for (var i = 0; i < axis2.length; i++) {            
+              var x = axis2[i][0] * 5;
+              var y = axis2[i][1] * 5;
+
+              console.log(axis2[i]);
+              // console.log('x : ' + x);
+              // console.log('y : ' + y);              
+
+              // switch(i){
+              //   case 1:
+              //     x = x + 10;
+              //     break;
+              //   case 2:
+              //     y = y + 10;
+              //   case 3:
+              //     x = x + 10;
+              //     y = y + 10;
+              //     break;
+              //   default:
+              // }
+
+              ctx.fillRect(x,y,10,10);
+            // for (var j = 0; j < 4; j++) {
+
+
+
+
+              
+            // };
+
+
+          };
+          
+      };
+      </script>
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">pixel counter</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>'Allo, 'Allo!</h1>
+        <p class="lead">Always a pleasure scaffolding your apps.</p>
+        <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>HTML5 Boilerplate</h4>
+          <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
+          
+          <h4>Sass</h4>
+          <p>Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.</p>
+          
+          <h4>Bootstrap</h4>
+          <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
+          <h4>Modernizr</h4>
+          <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
+          
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>♥ from the Yeoman team</p>
+      </div>
+    </div>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+
+    <!-- build:js scripts/plugins.js -->
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
+    <script type="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+  </body>
+</html>
