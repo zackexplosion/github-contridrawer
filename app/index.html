@@ -80,31 +80,44 @@
               var alpha = a[k+3];
 
 
+              var x = (k / 4) % w;
+              var y = Math.floor((k / 4) / h);
+
+              axis2.push({
+                'x'    : x,
+                'y'    : y,
+                'rgba' : [red,green,blue,alpha]
+              });
+
               // if ( red == 0){
               // // if ( red == 0){
               //   // console.log('red   : ' + red);
               //   // greens.push(1);
               // }
-              if(alpha == 0 ){
-                // console.log(alpha);
-                transparents.push(1);
-              }else{
-                axis.push(k/ 4);
+              // if(alpha == 0 ){
+              //   // console.log(alpha);
+              //   transparents.push(1);
+              // }else{
+              //   axis.push(k/ 4);
 
-                var x = (k / 4) % w;
-                var y = Math.floor((k / 4) / h);
+              //   var x = (k / 4) % w;
+              //   var y = Math.floor((k / 4) / h);
 
-                // console.log('axis   : ' + x + ',' + y);
-                // console.log('red    : ' + red);
-                // console.log('green  : ' + green);
-                // console.log('blue   : ' + blue);
-                // console.log('alpha  : ' + alpha);
-                // console.log('--------------');
+              //   // console.log('axis   : ' + x + ',' + y);
+              //   // console.log('red    : ' + red);
+              //   // console.log('green  : ' + green);
+              //   // console.log('blue   : ' + blue);
+              //   // console.log('alpha  : ' + alpha);
+              //   // console.log('--------------');
 
 
 
-                axis2.push([x,y]);
-              }
+              //   axis2.push({
+              //     'x'    : x,
+              //     'y'    : y,
+              //     'rgba' : [red,green,blue,alpha]
+              //   });
+              // }
 
 
           }
@@ -143,8 +156,15 @@
           // };
 
           for (var i = 0; i < axis2.length; i++) {            
-              var x = axis2[i][0] * 5;
-              var y = axis2[i][1] * 5;
+              var x = axis2[i].x;
+              var y = axis2[i].y;
+
+              var red   = axis2[i].rgba[0];
+              var green = axis2[i].rgba[1];
+              var blue  = axis2[i].rgba[2];
+              var alpha = axis2[i].rgba[3];
+
+              alpha = alpha / 255;
 
               console.log(axis2[i]);
               // console.log('x : ' + x);
@@ -162,8 +182,8 @@
               //     break;
               //   default:
               // }
-
-              ctx.fillRect(x,y,10,10);
+              ctx.fillStyle = "rgba(" + red +", " + green +  ", " + blue + ", " + alpha + ")";
+              ctx.fillRect(x,y,1,1);
             // for (var j = 0; j < 4; j++) {
 
 
