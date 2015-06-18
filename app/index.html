@@ -29,8 +29,8 @@
     
     <div class="container" style="background:#CCC">
       <h1>origin</h1>
-      <!-- <img id="scream" src="jobs.png"/> -->
-      <img id="scream" src="cube.png"/>
+      <img id="scream" src="jobs.png"/>
+      <!-- <img id="scream" src="cube.png"/> -->
       <h1>canvas</h1>
       <!-- <canvas id="myCanvas" style="width:310px"></canvas> -->
       <canvas id="myCanvas" width="310" height="70"></canvas>
@@ -38,162 +38,56 @@
       <h1>canvas2</h1>
       <canvas id="myCanvas2" width="310" height="70"></canvas>
       <script type="text/javascript">
+      function setPixel(imagedata, x, y, r, g, b, a) {
+        var i = (y * imagedata.width + x) * 4;
+        imagedata.data[i++] = r;
+        imagedata.data[i++] = g;
+        imagedata.data[i++] = b;
+        imagedata.data[i] = a;
+      }
+       
+      function getPixel(imagedata, x, y) {
+        var i = (y * imagedata.width + x) * 4;
+       
+        return {r: imagedata.data[i], g: imagedata.data[i+1], b: imagedata.data[i+2], a: imagedata.data[i+3]};
+      }
+      
       window.onload = function() {
-          var c = document.getElementById("myCanvas");
-          var ctx = c.getContext("2d");
-          // debugger;
+          
+          // var ctx = c.getContext("2d");
+          // // debugger;
           var img = document.getElementById("scream");
 
-          
-
-
-          var w      = img.naturalWidth;
-          var h      = img.naturalHeight;
-          // debugger;
-
-          // c.style.width  = w + 'px';
-          // c.style.height = h + 'px';
-
-          ctx.drawImage(img,0,0);
-
-          var imgdt  = ctx.getImageData(0, 0, w, h);
-
-          var a = imgdt.data;
-
-          // debugger;
-
-          var greens = [];
-
-          var transparents = [];
-          var axis = [];
-          var axis2 = [];
-          for (var k=0; k<a.length; k+=4 )
-          {
-
-              // a[k  ] = 255 - a[k  ];  // R
-              // a[k+1] = 255 - a[k+1];  // G
-              // a[k+2] = 255 - a[k+2];  // B
-              // a[k+3] = 255;           // A
-              var red   = a[k  ];
-              var green = a[k+1];
-              var blue  = a[k+2];
-              var alpha = a[k+3];
-
-
-              var x = (k / 4) % w;
-              var y = Math.floor((k / 4) / h);
-
-              axis2.push({
-                'x'    : x,
-                'y'    : y,
-                'rgba' : [red,green,blue,alpha]
-              });
-
-              // if ( red == 0){
-              // // if ( red == 0){
-              //   // console.log('red   : ' + red);
-              //   // greens.push(1);
-              // }
-              // if(alpha == 0 ){
-              //   // console.log(alpha);
-              //   transparents.push(1);
-              // }else{
-              //   axis.push(k/ 4);
-
-              //   var x = (k / 4) % w;
-              //   var y = Math.floor((k / 4) / h);
-
-              //   // console.log('axis   : ' + x + ',' + y);
-              //   // console.log('red    : ' + red);
-              //   // console.log('green  : ' + green);
-              //   // console.log('blue   : ' + blue);
-              //   // console.log('alpha  : ' + alpha);
-              //   // console.log('--------------');
-
-
-
-              //   axis2.push({
-              //     'x'    : x,
-              //     'y'    : y,
-              //     'rgba' : [red,green,blue,alpha]
-              //   });
-              // }
-
-
-          }
-          console.log( JSON.stringify(axis2.sort()) );
-          // console.log(a.length);
-          // console.log(transparents.length);
+      
+          var canvas  = document.getElementById("myCanvas");
+          var canvas2 = document.getElementById("myCanvas2");
+            // canvas.width = 400;
+            // canvas.height = 300;
            
-          // c.width = w;
-          // c.height = h;
-          // ctx.putImageData(imgdt, 0, 0);
+          var context  = canvas.getContext("2d");
 
-          window.axis = axis;
-          window.axis2 = axis2;
+          var context2 = canvas2.getContext("2d");
 
+          // context2.beginPath();
 
-          // var myCanvas2 = 
-          var c = document.getElementById("myCanvas2");
-          var ctx = c.getContext("2d");
-
-          var x = 0;
-          var y = 0;
-          // for (var i = 0; i < axis.length; i++) {            
-          //   console.log( axis[i] );
-          //   // var y = axis[i] % 70;
-          //   // // // var y = axis[i] / 70 ;
-
-          //   // var x = Math.ceil( axis[i] / 70 );
-
-
-          //   // console.log('x : ' + x);
-          //   // console.log('y : ' + y);
-          //   // x += 70;
-          //   // y += 10;
-
-          //   ctx.fillRect(x,y,1,1);
-          // };
-
-          for (var i = 0; i < axis2.length; i++) {            
-              var x = axis2[i].x;
-              var y = axis2[i].y;
-
-              var red   = axis2[i].rgba[0];
-              var green = axis2[i].rgba[1];
-              var blue  = axis2[i].rgba[2];
-              var alpha = axis2[i].rgba[3];
-
-              alpha = alpha / 255;
-
-              console.log(axis2[i]);
-              // console.log('x : ' + x);
-              // console.log('y : ' + y);              
-
-              // switch(i){
-              //   case 1:
-              //     x = x + 10;
-              //     break;
-              //   case 2:
-              //     y = y + 10;
-              //   case 3:
-              //     x = x + 10;
-              //     y = y + 10;
-              //     break;
-              //   default:
-              // }
-              ctx.fillStyle = "rgba(" + red +", " + green +  ", " + blue + ", " + alpha + ")";
-              ctx.fillRect(x,y,1,1);
-            // for (var j = 0; j < 4; j++) {
+          context.drawImage(img,0,0);
+          var imagedata = context.getImageData(0, 0, canvas.width, canvas.height);
+          
+          for( var y = 0 ; y < imagedata.height; y++ ) {
+            for( var x = 0 ; x < imagedata.width; x++ ) {
+              // set the colour randomly
+              // setPixel(imagedata, x, y, Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
+              var p = getPixel(imagedata,x,y);
+              // console.log( JSON.stringify(a) );
+              // context2.moveTo(x,y);
+              // context2.lineTo(x,y);
+              // context2.stroke();
+              context2.fillStyle = "rgba(" + p.r +", " + p.g +  ", " + p.b + ", " + p.a + ")";
+              context2.fillRect(x,y,1,1); // fill in the pixel at (10,10)
+            }
+          }
 
 
-
-
-              
-            // };
-
-
-          };
           
       };
       </script>
