@@ -11,11 +11,25 @@ function getPixel(imagedata, x, y) {
     return {r: imagedata.data[i], g: imagedata.data[i+1], b: imagedata.data[i+2], a: imagedata.data[i+3]};
 }
 
+// function getPixelWithDate(imagedata, x, y) {
+//     var i = (y * imagedata.width + x) * 4;
+//     return {
+//         r    : imagedata.data[i], 
+//         g    : imagedata.data[i+1], 
+//         b    : imagedata.data[i+2], 
+//         a    : imagedata.data[i+3],
+//     };
+// }
+
+var one_day = 1000*60*60*24;
+
+var git_size = {
+    width  : 0,
+    height : 7
+}
+
 window.onload = function() {
-    var git_size = {
-        width  : 0,
-        height : 7
-    }
+
     // var ctx = c.getContext("2d");
     // // debugger;
     var img = document.getElementById("scream");
@@ -39,35 +53,86 @@ window.onload = function() {
     var imagedata = context.getImageData(0, 0, canvas.width, canvas.height);
 
     // debugger;
-    var axis = [];
+    // var axis  = [];
+    var dates = [];
     (function(){
         var contribution = document.getElementById('contribution');
-        for( var x = 0 ; x < imagedata.width; x++ ) {
-        var week = document.createElement('div');
+        var start_date = new Date('2014-08-03');
 
-        week.className = 'week week-' + x;
+        // var end_date = new Date( start_date.getTime() + (one_day * axis.length) );
+        // var length = (end_date.getTime() - start_date.getTime()) / one_day;
+
+        var i = 0;
+        for( var x = 0 ; x < imagedata.width; x++ ) {
+            var week = document.createElement('div');
+
+            week.className = 'week week-' + x;
 
             for( var y = 0 ; y < imagedata.height; y++ ) {          
-              var day = document.createElement('span');
-              
-              // get the pixel color code
-              var pixel = getPixel(imagedata,x,y);
+                var day = document.createElement('span');
 
-              if(pixel.r === 0 && pixel.g === 0 && pixel.b === 0 && pixel.a === 0){
-                // transparent pixel
-              }else{
-                axis.push({
-                  x : x,
-                  y : y,
-                  data : pixel
-                });
-                day.className = 'dot';
-              }
-              week.appendChild(day);
+                var current_date = new Date( start_date.getTime() + (one_day * i) );
+                // console.log(current_date);
+
+                // get the pixel color code
+                var pixel = getPixel(imagedata,x,y);
+                if(pixel.r === 0 && pixel.g === 0 && pixel.b === 0 && pixel.a === 0){
+                    // transparent pixel
+                    pixel = null;
+                }else{
+                    day.className = 'dot';
+                    dates.push(moment(current_date));
+                }
+
+                week.appendChild(day);
+                i++;
             }
 
             contribution.appendChild(week);
         }
+    })();
+    
+
+    (function(){
+        var a = dates;
+        // debugger;
+        // var start_date = moment([2014,08,03]);        
+
+        // var end_date   = start_date.subtract(axis.length,'days');
+        // debugger;
+        // // end_date = moment(end_date);
+
+        // var c = start_date.diff(end_date, 'days');
+        // debugger;
+
+        
+
+        // var start_date = new Date('2014-08-03');
+        // var end_date = new Date( start_date.getTime() + (one_day * axis.length) );
+        // var length = (end_date.getTime() - start_date.getTime()) / one_day;
+
+        // var for_start = parseInt( ( new Date().getTime() - start_date.getTime() ) / one_day );        
+        // var for_end  = for_start - axis.length; 
+
+        // // debugger;
+
+        // // var end_date   = new Date();
+        // for (var i = 0; i < axis.length; i++) {
+        //     console.log(axis[i]);
+        // };
+
+// for i in {start..0}
+// do
+// date=`date -v -"$i"d +"%Y/%m/%d"`
+//     for j in {0..50}
+//     do
+//         echo $date >> message.txt 
+
+//         git add . 
+//         git commit --date="$date" -m "$date"
+//     done
+// done
+
     })();
 
 };
