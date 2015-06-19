@@ -4,6 +4,29 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+
+#contribution{
+  clear: both;
+  overflow: auto;
+}
+
+$grid-spacing : 5px;
+
+.week {
+  float : left ;
+  margin-right : $grid-spacing;
+  span {
+    display: block;
+    width  : 10px;
+    height : 10px;
+    margin-bottom: $grid-spacing;    
+    background : #FFF;
+    &.dot{
+      background : green;
+    }
+  }  
+}
+
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
@@ -70,7 +93,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 830px;
   }
 
   /* Remove the padding we set earlier */
