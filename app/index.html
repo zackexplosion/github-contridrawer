@@ -52,6 +52,10 @@
         return {r: imagedata.data[i], g: imagedata.data[i+1], b: imagedata.data[i+2], a: imagedata.data[i+3]};
       }
       
+      var git_size = {
+        width  : 31,
+        height : 7
+      }
       window.onload = function() {
           
           // var ctx = c.getContext("2d");
@@ -60,17 +64,18 @@
 
       
           var canvas  = document.getElementById("myCanvas");
+          canvas.width  = git_size.width  ;
+          canvas.height = git_size.height ;
           var canvas2 = document.getElementById("myCanvas2");
-            // canvas.width = 400;
-            // canvas.height = 300;
-           
+
+
           var context  = canvas.getContext("2d");
 
           var context2 = canvas2.getContext("2d");
 
           // context2.beginPath();
 
-          context.drawImage(img,0,0);
+          context.drawImage(img, 0, 0, git_size.width, git_size.height);
           var imagedata = context.getImageData(0, 0, canvas.width, canvas.height);
           
           for( var y = 0 ; y < imagedata.height; y++ ) {
@@ -85,7 +90,7 @@
               context2.fillStyle = "rgba(" + p.r +", " + p.g +  ", " + p.b + ", " + p.a + ")";
               // context2.fillRect(x,y,1,1); // fill in the pixel at (10,10)
 
-              context2.fillRect(x /10,y/10,1,1); // fill in the pixel at (10,10)
+              context2.fillRect(x,y,1,1); // fill in the pixel at (10,10)
             }
           }
 
