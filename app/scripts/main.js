@@ -11,6 +11,19 @@ function getPixel(imagedata, x, y) {
     return {r: imagedata.data[i], g: imagedata.data[i+1], b: imagedata.data[i+2], a: imagedata.data[i+3]};
 }
 
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('download', filename);
+
+  pom.style.display = 'none';
+  document.body.appendChild(pom);
+
+  pom.click();
+
+  document.body.removeChild(pom);
+}
+
 // function getPixelWithDate(imagedata, x, y) {
 //     var i = (y * imagedata.width + x) * 4;
 //     return {
@@ -94,7 +107,27 @@ window.onload = function() {
     
 
     (function(){
-        var a = dates;
+        // var a = dates;
+        var output = document.getElementById("output");
+
+        var output = '';
+        for (var i = dates.length - 1; i >= 0; i--) {
+            // console.log(dates[i]);
+            // var d = document.createElement('div');
+            // d.innerHTML = dates[i];
+            // output.appendChild(d);
+
+            // output += dates[i]
+            var date = dates[i];
+            
+            // var d   = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            var d = date.format('YYYY-MM-DD');
+            // debugger;
+            output += d + "\n";
+        };
+
+        download('dates', output);
+        
         // debugger;
         // var start_date = moment([2014,08,03]);        
 
