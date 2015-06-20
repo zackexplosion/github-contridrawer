@@ -29,18 +29,22 @@ function getPixel(imagedata, x, y) {
     };
 }
 
-// function download(filename, text) {
-//   var pom = document.createElement('a');
-//   pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-//   pom.setAttribute('download', filename);
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('download', filename);
 
-//   pom.style.display = 'none';
-//   document.body.appendChild(pom);
+  pom.style.display = 'none';
+  document.body.appendChild(pom);
 
-//   pom.click();
+  pom.click();
 
-//   document.body.removeChild(pom);
-// }
+  document.body.removeChild(pom);
+}
+
+var downloadshell = function(){
+    download('github-contridraer.sh', 'hello');
+};
 
 var handleDragOver = function(e){
     e.stopPropagation();
@@ -224,4 +228,7 @@ var fileChangeHandler = function(e){
 
 window.onload = function() {
     render_preview();
+
+    var downloadButton = document.getElementById('download-button');
+    downloadButton.addEventListener('click', downloadshell);
 };
