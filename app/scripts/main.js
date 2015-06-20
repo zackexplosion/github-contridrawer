@@ -53,7 +53,11 @@ var fileChangeHandler = function(e){
         reader.onload = (function(theFile){
             return function(e){
                 var data = e.target.result;
-                debugger;
+
+                var img = document.getElementById("import-image");
+                img.src = data;
+                
+                render_preview();
             };
         })(f);
 
@@ -70,8 +74,7 @@ var handleDragOver = function(e){
     // e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-window.onload = function() {
-
+var render_preview = function(){
     var input = document.getElementById("import-file");
     input.addEventListener('change', fileChangeHandler);
 
@@ -109,6 +112,9 @@ window.onload = function() {
     var dates = [];
     (function(){
         var contribution = document.getElementById('contribution');
+        // reset preview block
+        contribution.innerHTML = '';
+        
         var start_date = new Date('2014-08-03');
 
         // var end_date = new Date( start_date.getTime() + (one_day * axis.length) );
@@ -206,5 +212,8 @@ window.onload = function() {
 // done
 
     })();
+}
 
+window.onload = function() {
+    render_preview();
 };
