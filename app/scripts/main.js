@@ -1,5 +1,8 @@
 'use strict';
-/*eslint camelcase: [2, {properties: "never"}]*/
+/*global moment*/
+/*eslint camelcase: false*/
+/*eslint no-loop-func: false*/
+
 
 // function setPixel(imagedata, x, y, r, g, b, a) {
 //     var i = (y * imagedata.width + x) * 4;
@@ -9,6 +12,12 @@
 //     imagedata.data[i] = a;
 // }
 
+var one_day = 1000 * 60 * 60 * 24;
+
+var git_size = {
+    width: 0,
+    height: 7
+};
 
 function getPixel(imagedata, x, y) {
     var i = (y * imagedata.width + x) * 4;
@@ -33,49 +42,6 @@ function getPixel(imagedata, x, y) {
 //   document.body.removeChild(pom);
 // }
 
-var one_day = 1000 * 60 * 60 * 24;
-
-var git_size = {
-    width: 0,
-    height: 7
-};
-
-var fileChangeHandler = function(e){
-    e.stopPropagation();
-    e.preventDefault();
-
-
-    var files
-    if(typeof e.target.files === 'undefined'){
-        files = e.dataTransfer.files;
-    }else{
-        files = e.target.files;
-    }
-
-    for (var i = 0, f; f = files[i]; i++) {
-        if(!f.type.match('image.*')){
-            continue;
-        }
-
-        var reader = new FileReader();
-
-        reader.onload = (function(theFile){
-            return function(evt){
-                var data = evt.target.result;
-
-                var img = document.getElementById("import-image");
-                img.src = data;
-                render_preview();
-            };
-        })(f);
-
-        reader.readAsDataURL(f);
-        // debugger;
-
-    }
-
-};
-
 var handleDragOver = function(e){
     e.stopPropagation();
     e.preventDefault();
@@ -83,13 +49,13 @@ var handleDragOver = function(e){
 };
 
 var render_preview = function(){
-    var input = document.getElementById("import-file");
-    input.addEventListener('change', fileChangeHandler);
+    var input = document.getElementById('import-file');
+    input.addEventListener('change', fileChangeHandler);  //eslint-disable-line no-use-before-define
 
-    var importForm = document.getElementById("import-form");
+    var importForm = document.getElementById('import-form');
     importForm.addEventListener('dragover', handleDragOver, false);
-    importForm.addEventListener('drop',     fileChangeHandler, false);
-    importForm.addEventListener('click' , function(){
+    importForm.addEventListener('drop', fileChangeHandler, false);  //eslint-disable-line no-use-before-define
+    importForm.addEventListener('click', function(){
         input.click();
     });
 
@@ -97,10 +63,10 @@ var render_preview = function(){
     // // debugger;
     var img = document.getElementById('import-image');
 
-    var width_compress_rate =  img.naturalHeight / 7;
+    var width_compress_rate = img.naturalHeight / 7;
     git_size.width = img.naturalWidth / width_compress_rate;
 
-    var canvas  = document.getElementById('myCanvas');
+    var canvas = document.getElementById('myCanvas');
     canvas.width = git_size.width;
     canvas.height = git_size.height;
     // var canvas2 = document.getElementById("myCanvas2");
@@ -218,6 +184,42 @@ var render_preview = function(){
 // done
 
     })();
+};
+
+var fileChangeHandler = function(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+
+    var files;
+    if(typeof e.target.files === 'undefined'){
+        files = e.dataTransfer.files;
+    }else{
+        files = e.target.files;
+    }
+
+    for (var i = 0, f; f = files[i]; i++) {  //eslint-disable-line no-cond-assign
+        if(!f.type.match('image.*')){
+            continue;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = (function(){  //eslint-disable-line no-loop-func
+            return function(evt){  //eslint-disable-line no-loop-func
+                var data = evt.target.result;
+
+                var img = document.getElementById('import-image');
+                img.src = data;
+                render_preview();
+            };
+        })(f);
+
+        reader.readAsDataURL(f);
+        // debugger;
+
+    }
+
 };
 
 window.onload = function() {
