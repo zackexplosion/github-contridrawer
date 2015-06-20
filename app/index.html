@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>pixel counter</title>
+    <title>GitHub ContriDrawer</title>
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
@@ -17,7 +17,7 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    
+
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
@@ -86,6 +86,22 @@
       <div class="footer">
         <p>♥ from the Yeoman team</p>
       </div>
+    </div>
+
+    <div id="shell-template" style="display:none">
+#!/bin/bash
+dates=()
+for date in ${!dates[*]}
+do
+  echo "$date"
+  # touch "$fileName"
+  for d in {0..50}
+  do
+    echo $date >> message.txt
+    git add .
+    git commit --date="$date" -m "$date"
+  done
+done
     </div>
 
 

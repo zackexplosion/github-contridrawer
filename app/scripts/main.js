@@ -19,6 +19,8 @@ var git_size = {
     height: 7
 };
 
+var datesToDraw = [];
+
 function getPixel(imagedata, x, y) {
     var i = (y * imagedata.width + x) * 4;
     return {
@@ -31,7 +33,7 @@ function getPixel(imagedata, x, y) {
 
 function download(filename, text) {
   var pom = document.createElement('a');
-  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text) );
   pom.setAttribute('download', filename);
 
   pom.style.display = 'none';
@@ -43,7 +45,19 @@ function download(filename, text) {
 }
 
 var downloadshell = function(){
-    download('github-contridraer.sh', 'hello');
+    var template = document.getElementById('shell-template').innerText;
+    var dates = 'dates=(';
+    template = template.replace('dates=()', dates);
+
+    for (var i = datesToDraw.length - 1; i >= 0; i--) {
+        var d = new Date(datesToDraw[i]);
+        var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        dates += date + ' ';
+    }
+
+    dates += ')';
+
+    download('github-contridrawer.sh', template);
 };
 
 var handleDragOver = function(e){
@@ -53,16 +67,6 @@ var handleDragOver = function(e){
 };
 
 var render_preview = function(){
-    var input = document.getElementById('import-file');
-    input.addEventListener('change', fileChangeHandler);  //eslint-disable-line no-use-before-define
-
-    var importForm = document.getElementById('import-form');
-    importForm.addEventListener('dragover', handleDragOver, false);
-    importForm.addEventListener('drop', fileChangeHandler, false);  //eslint-disable-line no-use-before-define
-    importForm.addEventListener('click', function(){
-        input.click();
-    });
-
     // var ctx = c.getContext("2d");
     // // debugger;
     var img = document.getElementById('import-image');
@@ -87,7 +91,6 @@ var render_preview = function(){
 
     // debugger;
     // var axis  = [];
-    var dates = [];
     (function(){
         var contribution = document.getElementById('contribution');
         // reset preview block
@@ -117,7 +120,7 @@ var render_preview = function(){
                     pixel = null;
                 }else{
                     day.className = 'dot';
-                    dates.push(moment(current_date));
+                    datesToDraw.push(moment(current_date));
                 }
 
                 week.appendChild(day);
@@ -126,67 +129,6 @@ var render_preview = function(){
 
             contribution.appendChild(week);
         }
-    })();
-
-    (function(){
-        // var a = dates;
-        // var output = document.getElementById("output");
-
-        var output = '';
-        for (var i = dates.length - 1; i >= 0; i--) {
-            // console.log(dates[i]);
-            // var d = document.createElement('div');
-            // d.innerHTML = dates[i];
-            // output.appendChild(d);
-
-            // output += dates[i]
-            var date = dates[i];
-
-            // var d   = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-            var d = date.format('YYYY-MM-DD');
-            // debugger;
-            output += d + '\n';
-        }
-
-        // download('dates', output);
-
-        // debugger;
-        // var start_date = moment([2014,08,03]);
-
-        // var end_date   = start_date.subtract(axis.length,'days');
-        // debugger;
-        // // end_date = moment(end_date);
-
-        // var c = start_date.diff(end_date, 'days');
-        // debugger;
-
-
-        // var start_date = new Date('2014-08-03');
-        // var end_date = new Date( start_date.getTime() + (one_day * axis.length) );
-        // var length = (end_date.getTime() - start_date.getTime()) / one_day;
-
-        // var for_start = parseInt( ( new Date().getTime() - start_date.getTime() ) / one_day );
-        // var for_end  = for_start - axis.length;
-
-        // // debugger;
-
-        // // var end_date   = new Date();
-        // for (var i = 0; i < axis.length; i++) {
-        //     console.log(axis[i]);
-        // };
-
-// for i in {start..0}
-// do
-// date=`date -v -"$i"d +"%Y/%m/%d"`
-//     for j in {0..50}
-//     do
-//         echo $date >> message.txt
-
-//         git add .
-//         git commit --date="$date" -m "$date"
-//     done
-// done
-
     })();
 };
 
@@ -227,6 +169,16 @@ var fileChangeHandler = function(e){
 };
 
 window.onload = function() {
+    var input = document.getElementById('import-file');
+    input.addEventListener('change', fileChangeHandler);  //eslint-disable-line no-use-before-define
+
+    var importForm = document.getElementById('import-form');
+    importForm.addEventListener('dragover', handleDragOver, false);
+    importForm.addEventListener('drop', fileChangeHandler, false);  //eslint-disable-line no-use-before-define
+    importForm.addEventListener('click', function(){
+        input.click();
+    });
+
     render_preview();
 
     var downloadButton = document.getElementById('download-button');
