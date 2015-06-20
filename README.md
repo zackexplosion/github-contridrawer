@@ -1,6 +1,5 @@
 # GitHub ContriDrawer
 
-## Usage
 Go the the website [http://cdn.zackexplosion.com/github-contridrawer/]().
 
 Select a image file and ouput a shell command to drawing on your github contribution block.
@@ -10,6 +9,10 @@ Select a image file and ouput a shell command to drawing on your github contribu
 If you like Jobs, draw he's name on your github!
 
 ![Imgur](http://i.imgur.com/dUH74IK.png)
+
+## How it works?
+
+This app reads image with HTML 5 file api, and scale the image height to 7 pixel to git github's contribution size. And export a shell command let you run with your own git repository.
 
 ## Contribution
 
