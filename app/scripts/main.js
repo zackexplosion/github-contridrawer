@@ -58,7 +58,7 @@ var downloadshell = function(){
 
     template = template.replace('dates=()', dates);
 
-    download('github-contridrawer.sh', template);
+    download('github-contridrawer', template);
 };
 
 var handleDragOver = function(e){
