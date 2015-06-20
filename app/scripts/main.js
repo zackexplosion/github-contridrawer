@@ -1,10 +1,10 @@
-function setPixel(imagedata, x, y, r, g, b, a) {
-    var i = (y * imagedata.width + x) * 4;
-    imagedata.data[i++] = r;
-    imagedata.data[i++] = g;
-    imagedata.data[i++] = b;
-    imagedata.data[i] = a;
-}
+// function setPixel(imagedata, x, y, r, g, b, a) {
+//     var i = (y * imagedata.width + x) * 4;
+//     imagedata.data[i++] = r;
+//     imagedata.data[i++] = g;
+//     imagedata.data[i++] = b;
+//     imagedata.data[i] = a;
+// }
 
 function getPixel(imagedata, x, y) {
     var i = (y * imagedata.width + x) * 4;
@@ -23,16 +23,6 @@ function download(filename, text) {
 
   document.body.removeChild(pom);
 }
-
-// function getPixelWithDate(imagedata, x, y) {
-//     var i = (y * imagedata.width + x) * 4;
-//     return {
-//         r    : imagedata.data[i], 
-//         g    : imagedata.data[i+1], 
-//         b    : imagedata.data[i+2], 
-//         a    : imagedata.data[i+3],
-//     };
-// }
 
 var one_day = 1000*60*60*24;
 
@@ -126,7 +116,7 @@ window.onload = function() {
             output += d + "\n";
         };
 
-        download('dates', output);
+        // download('dates', output);
         
         // debugger;
         // var start_date = moment([2014,08,03]);        
