@@ -3,6 +3,24 @@ $icon-font-path: '../fonts/';
 // bower:scss
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
+
+
+
+#import-form{
+  width : 20%;
+  height: 200px;
+  border : 1px dotted;
+  display: table-cell;
+  vertical-align: middle;
+  div.text{
+    text-align: center;    
+  }
+  input{
+    // text-indent: -9999px;
+    display: none;
+  }
+}
+
 #import-image{
   img{
     max-width: 100%;

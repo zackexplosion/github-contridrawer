@@ -31,11 +31,60 @@ var git_size = {
     height : 7
 }
 
+var fileChangeHandler = function(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+
+    var files
+    if(typeof e.target.files === 'undefined'){
+        files = e.dataTransfer.files;
+    }else{
+        files = e.target.files;
+    }
+
+    for (var i = 0, f; f = files[i]; i++) {
+        if(!f.type.match('image.*')){
+            continue;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = (function(theFile){
+            return function(e){
+                var data = e.target.result;
+                debugger;
+            };
+        })(f);
+
+        reader.readAsDataURL(f);
+        // debugger;
+        
+    };
+    
+}
+
+var handleDragOver = function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    // e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+
 window.onload = function() {
+
+    var input = document.getElementById("import-file");
+    input.addEventListener('change', fileChangeHandler);
+
+    var importForm = document.getElementById("import-form");
+    importForm.addEventListener('dragover', handleDragOver, false);
+    importForm.addEventListener('drop',     fileChangeHandler, false);
+    importForm.addEventListener('click' , function(){
+        input.click();
+    });
 
     // var ctx = c.getContext("2d");
     // // debugger;
-    var img = document.getElementById("scream");
+    var img = document.getElementById("import-image");
 
     var width_compress_rate =  img.naturalHeight / 7;
     git_size.width = img.naturalWidth / width_compress_rate;
