@@ -50,11 +50,12 @@
 
       <div class="row">
         <div class="col-lg-12">
-          <h1 style="margin:0">Steps</h1>
+          <h1 style="margin-top:0">Steps</h1>
           <ol class="list">
             <li>Select your image file</li>
             <li>preview the view</li>
-            <li>download the shell and execute</li>
+            <li>download the shell script , put in an empty folder then execute it</li>
+            <li>push the repository to github</li>
           </ol>
 
           <hr />
@@ -90,6 +91,7 @@
 
     <div id="shell-template" style="display:none">
 #!/bin/bash
+git init
 dates=()
 for date in ${!dates[*]}
 do

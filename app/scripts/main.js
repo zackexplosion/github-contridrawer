@@ -47,7 +47,6 @@ function download(filename, text) {
 var downloadshell = function(){
     var template = document.getElementById('shell-template').innerText;
     var dates = 'dates=(';
-    template = template.replace('dates=()', dates);
 
     for (var i = datesToDraw.length - 1; i >= 0; i--) {
         var d = new Date(datesToDraw[i]);
@@ -56,6 +55,8 @@ var downloadshell = function(){
     }
 
     dates += ')';
+
+    template = template.replace('dates=()', dates);
 
     download('github-contridrawer.sh', template);
 };
