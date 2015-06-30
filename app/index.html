@@ -31,7 +31,7 @@
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    
+
     <!-- TOP RIGHT RIBBON: START COPYING HERE -->
     <div class="github-fork-ribbon-wrapper right">
         <div class="github-fork-ribbon">
@@ -40,58 +40,48 @@
     </div>
 
 
-    <div class="container" style="background:#CCC">
-      <div class="">
-<!--         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul> -->
+    <div class="container-fliud">
+      <div class="col-md-12">
         <h3 class="text-muted">GitHub ContriDrawer</h3>
+        <h1 style="margin-top:0">Steps</h1>
+        <ol class="list">
+          <li>Select your image file</li>
+          <li>preview the view</li>
+          <li>download the shell script , put in an empty folder then execute it</li>
+          <li>push the repository to github</li>
+        </ol>
       </div>
-      <hr />
+      <!-- left -->
+      <div class="col-md-6">
+        <h1>Choose Image</h1>
+        <form id="import-form">
+          <div class="text">Click to slect file or drag file into here</div>
+          <input type="file" id="import-file" />
+        </form>
 
-<!--       <div class="jumbotron">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Always a pleasure scaffolding your apps.</p>
-        <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
-      </div> -->
+        <h1>Imported</h1>
 
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 style="margin-top:0">Steps</h1>
-          <ol class="list">
-            <li>Select your image file</li>
-            <li>preview the view</li>
-            <li>download the shell script , put in an empty folder then execute it</li>
-            <li>push the repository to github</li>
-          </ol>
+        <div id="">
+          <img id="import-image" src="jobs.png"/>
+        </div>
+      </div>
 
-          <hr />
-
-          <form id="import-form">
-            <div class="text">Click to slect file or drag file into here</div>
-            <input type="file" id="import-file" />
-          </form>
-
-          <h1>Imported</h1>
-
-          <div id="">
-            <img id="import-image" src="jobs.png"/>
-          <!-- <img id="scream" src="images/steve-jobs.png"/> -->
-          </div>
-          <!-- <img id="scream" src="cube.png"/> -->
+      <!-- right -->
+      <div class="col-md-6">
           <h1>Preview</h1>
-          <!-- <canvas id="myCanvas" style="width:310px"></canvas> -->
           <canvas id="myCanvas" style="display: none;"></canvas>
 
           <div id="contribution"></div>
 
           <hr />
           <button id="download-button" class="btn btn-primary">Download</button>
+      </div>
+
+<!--       <div class="row">
+        <div class="col-lg-12">
 
         </div>
-      </div>
+      </div> -->
 
       <div class="footer">
         <p>♥ from the Yeoman team</p>
