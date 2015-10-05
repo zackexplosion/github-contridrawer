@@ -1,6 +1,6 @@
 # GitHub ContriDrawer
 
-Go the the website <http://cdn.zackexplosion.com/github-contridrawer>.
+Go the the website <http://zackexplosion.github.io/github-contridrawer/>.
 
 Select a image file and ouput a shell command to drawing on your github contribution block.
 
